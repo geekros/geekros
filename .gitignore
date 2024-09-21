@@ -3,10 +3,3 @@
 .git
 .vscode
 .DS_Store
-agent/build
-agent/dist
-agent/geekros.egg-info
-frontend/*.lock
-frontend/node_modules
-tools/*.deb
-tools/debian
