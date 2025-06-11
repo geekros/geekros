@@ -1,5 +1,5 @@
 server:
     mode: debug # debug or release
-    port: 10080
+    port: 10088
     read_timeout: 60s
     write_timeout: 60s
