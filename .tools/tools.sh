@@ -104,7 +104,7 @@ on_publish(){
     export GO111MODULE=on && export GOPROXY=https://goproxy.io
     cd ../cmd && /usr/local/go/bin/go mod tidy && /usr/local/go/bin/go build -o ../release/main main.go
     sudo cp ../release/main ../.tools/debian/opt/geekros/release/
-    sudo cp ../release/config.sample.yaml ../tools/debian/opt/geekros/release/
+    sudo cp ../release/config.sample.yaml ../.tools/debian/opt/geekros/release/
     sudo rm -rf ../release/main && cd ../.tools
 
     sudo touch debian/DEBIAN/conffiles && sudo chmod +x debian/DEBIAN/conffiles
