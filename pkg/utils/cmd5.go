@@ -12,6 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package protocol
+package utils
 
-type EmptyData struct{}
+import (
+	"crypto/md5"
+	"encoding/hex"
+)
+
+func EncryptMD5(input string) string {
+	hash := md5.New()
+	hash.Write([]byte(input))
+	hashBytes := hash.Sum(nil)
+	return hex.EncodeToString(hashBytes)
+}

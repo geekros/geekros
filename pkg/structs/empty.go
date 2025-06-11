@@ -12,15 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package handler
+package structs
 
-import (
-	"github.com/geekros/geekros/pkg/structs"
-	"github.com/geekros/geekros/pkg/utils"
-	"github.com/gin-gonic/gin"
-)
-
-func Health(c *gin.Context) {
-
-	utils.Success(c, structs.EmptyData{})
-}
+type EmptyData struct{}
