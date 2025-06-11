@@ -7,7 +7,6 @@ github.com/cloudwego/base64x v0.1.5 h1:XPciSp1xaq2VCSt6lF0phncD4koWyULpl5bUxbfCy
 github.com/cloudwego/base64x v0.1.5/go.mod h1:0zlkT4Wn5C6NdauXdJRhSKRlJvmclQ1hhJgA0rcu/8w=
 github.com/cloudwego/iasm v0.2.0/go.mod h1:8rXZaNYT2n95jn+zTI1sDr+IgcD2GVs0nlbbQPiEFhY=
 github.com/cpuguy83/go-md2man/v2 v2.0.6/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6NIQQ7OS05n1F4g=
-github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
@@ -15,8 +14,10 @@ github.com/gabriel-vasile/mimetype v1.4.8 h1:FfZ3gj38NjllZIeJAmMhr+qKL8Wu+nOoI3G
 github.com/gabriel-vasile/mimetype v1.4.8/go.mod h1:ByKUIKGjh1ODkGM1asKUbQZOLGrPjydw3hYPU2YU9t8=
 github.com/geekros/server v0.0.0-20250611015120-7b6bfeccaa77 h1:WvRB6YhqZiEtXKP7A5434q6K8tWbBLkNApaZDUhQtb4=
 github.com/geekros/server v0.0.0-20250611015120-7b6bfeccaa77/go.mod h1:iN1S7YF1EMnHiby7gFuin5sxT8qcpXmSyH2ugqCluTo=
-github.com/geekros/server v0.0.3 h1:vxtZybpC56dYlhNjc/QkFx/79y0/PjSboHLRlOf0Fr8=
-github.com/geekros/server v0.0.3/go.mod h1:c2eBYiq0sRMNcBK+ctjophmqgbEqwA7Lu3NJOVABiYc=
+github.com/geekros/structure v0.0.1 h1:gO98IRtvkdMBuWzn58Sd43MZotViq9gEgeV9vJXe84Y=
+github.com/geekros/structure v0.0.1/go.mod h1:7u6THbc4gd+FkBK6mRdm3NvNVZ8mbIrHBWHiqBHw19s=
+github.com/geekros/utils v0.0.4 h1:YaQBlip+YJpn3y8A1HnaRdBjZwkX5IZJmFBsW1ePZy0=
+github.com/geekros/utils v0.0.4/go.mod h1:xMAcFdZD3ZLBGrI/pNJx+mLbrMoHrTdxpebVo+S5RS4=
 github.com/gin-contrib/cors v1.7.5 h1:cXC9SmofOrRg0w9PigwGlHG3ztswH6bqq4vJVXnvYMk=
 github.com/gin-contrib/cors v1.7.5/go.mod h1:4q3yi7xBEDDWKapjT2o1V7mScKDDr8k+jZ0fSquGoy0=
 github.com/gin-contrib/sse v1.0.0 h1:y3bT1mUWUxDpW4JLQg/HnTqV4rozuW4tC9eFKTxYI9E=
