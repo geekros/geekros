@@ -4,5 +4,5 @@ server:
     read_timeout: 60s
     write_timeout: 60s
 auth:
-    secret: hV0scXUUCfy5e/8mqfMfTHDJjj7HgaOZmKM3fSxtlTg=
+    secret: 42dcbb847878c58b5fd58454913335a3
     expiration: 720
