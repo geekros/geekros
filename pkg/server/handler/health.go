@@ -21,5 +21,6 @@ import (
 )
 
 func Health(c *gin.Context) {
+
 	utils.Success(c, protocol.EmptyData{})
 }
