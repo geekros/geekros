@@ -23,7 +23,7 @@ import (
 
 type responseAuthToken struct {
 	Token      string `json:"token"`
-	Expiration int    `json:expiration`
+	Expiration int    `json:"expiration"`
 }
 
 func AuthToken(c *gin.Context) {
