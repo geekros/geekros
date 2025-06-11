@@ -15,12 +15,37 @@
 package auth
 
 import (
+	"github.com/geekros/geekros/pkg/config"
 	"github.com/geekros/geekros/pkg/structs"
 	"github.com/geekros/geekros/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 
+type responseAuthToken struct {
+	Token      string `json:"token"`
+	Expiration int    `json:expiration`
+}
+
 func AuthToken(c *gin.Context) {
 
-	utils.Success(c, structs.EmptyData{})
+	responseData := responseAuthToken{}
+
+	role := c.DefaultQuery("role", "")
+	if role == "" {
+		utils.Error(c, structs.EmptyData{})
+	}
+
+	data := map[string]interface{}{
+		"role": role,
+	}
+
+	token, err := utils.GenerateToken(config.Get.Auth.Secret, data, config.Get.Auth.Expiration)
+	if err != nil {
+		utils.Error(c, structs.EmptyData{})
+	}
+
+	responseData.Token = token
+	responseData.Expiration = config.Get.Auth.Expiration
+
+	utils.Success(c, responseData)
 }

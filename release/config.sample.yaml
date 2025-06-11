@@ -3,3 +3,6 @@ server:
     port: 10088
     read_timeout: 60s
     write_timeout: 60s
+auth:
+    secret: 42dcbb847878c58b5fd58454913335a3
+    expiration: 720

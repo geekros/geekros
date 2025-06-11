@@ -29,6 +29,7 @@ type Config struct {
 	Workspace string  `yaml:"-"`
 	Runtime   string  `yaml:"-"`
 	Server    service `yaml:"server"`
+	Auth      auth    `yaml:"auth"`
 }
 
 type service struct {
@@ -36,6 +37,11 @@ type service struct {
 	Port         int           `yaml:"port"`
 	ReadTimeout  time.Duration `yaml:"read_timeout"`
 	WriteTimeout time.Duration `yaml:"write_timeout"`
+}
+
+type auth struct {
+	Secret     string `yaml:"secret"`
+	Expiration int    `yaml:"expiration"`
 }
 
 func New() *Config {
