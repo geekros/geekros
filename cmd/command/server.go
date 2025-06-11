@@ -18,13 +18,13 @@ import (
 	"log"
 
 	"github.com/geekros/geekros/pkg/config"
-	"github.com/geekros/geekros/pkg/service"
-	"github.com/geekros/server/pkg/server"
+	"github.com/geekros/geekros/pkg/server"
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
 )
 
 func Server() *cobra.Command {
+
 	command := &cobra.Command{
 		Use:     "server",
 		Short:   "Start server module",
@@ -41,8 +41,8 @@ func serverRun(cmd *cobra.Command, args []string) {
 
 	config.Get = config.New().LoadConfig()
 
-	service.Get = server.New()
-	service.Get.Start(config.Get.Server.Port, config.Get.Server.Mode, config.Get.Server.ReadTimeout, config.Get.Server.WriteTimeout, func() {
+	server.Get = server.New()
+	server.Get.Start(func() {
 		log.Println(color.Gray.Text("started server"))
 	}, func() {
 		log.Println(color.Gray.Text("exited server"))

@@ -12,8 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package service
+package handler
 
-import "github.com/geekros/server/pkg/server"
+import (
+	"github.com/gin-gonic/gin"
+)
 
-var Get = &server.Server{}
+func Health(c *gin.Context) {
+
+}
