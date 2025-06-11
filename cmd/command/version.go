@@ -37,5 +37,6 @@ func Version() *cobra.Command {
 }
 
 func versionRun(cmd *cobra.Command, args []string) {
+	log.SetFlags(0)
 	log.Println(color.White.Text(fmt.Sprintf("%s %s (%s)", version.Name, version.Number, version.Site)))
 }
