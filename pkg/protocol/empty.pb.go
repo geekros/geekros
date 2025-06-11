@@ -12,14 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package handler
+package protocol
 
-import (
-	"github.com/geekros/geekros/pkg/protocol"
-	"github.com/geekros/geekros/pkg/utils"
-	"github.com/gin-gonic/gin"
-)
-
-func Health(c *gin.Context) {
-	utils.Success(c, protocol.EmptyData{})
-}
+type EmptyData struct{}
