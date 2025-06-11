@@ -16,6 +16,7 @@ package router
 
 import (
 	"github.com/geekros/geekros/pkg/server/handler"
+	"github.com/geekros/geekros/pkg/server/handler/auth"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -25,34 +26,43 @@ type Router struct {
 }
 
 func New() *Router {
+
 	return &Router{}
 }
 
 func (r *Router) Init(mode string) *Router {
+
 	gin.SetMode(mode)
+
 	r.engine = gin.New()
 	r.engine.Use(gin.Recovery())
 	r.engine.Use(cors.Default())
 	r.engine.Use(r.Authentication())
+
 	return r
 }
 
 func (r *Router) Authentication() gin.HandlerFunc {
+
 	return func(c *gin.Context) {
 		c.Next()
 	}
 }
 
 func (r *Router) InitFrontendHandler() *gin.Engine {
+
 	return r.engine
 }
 
 func (r *Router) InitHandler() *gin.Engine {
+
 	r.InitFrontendHandler()
 
 	handlerGroup := r.engine.Group("handler")
 	{
 		handlerGroup.GET("/health", handler.Health)
+
+		handlerGroup.GET("/auth/token", auth.AuthToken)
 	}
 
 	return r.engine

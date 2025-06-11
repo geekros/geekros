@@ -75,6 +75,7 @@ func (c *Config) LoadConfig() *Config {
 }
 
 func (c *Config) UpdateConfig() error {
+
 	data, err := yaml.Marshal(c)
 	if err != nil {
 		return err

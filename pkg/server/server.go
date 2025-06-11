@@ -36,13 +36,16 @@ type Server struct {
 }
 
 func New() *Server {
+
 	Router := router.New()
+
 	return &Server{
 		Router: Router,
 	}
 }
 
 func (s *Server) Start(callback func(), exit func()) {
+
 	s.HttpServer = &http.Server{
 		Addr:           fmt.Sprintf(":%d", config.Get.Server.Port),
 		Handler:        s.Router.Init(config.Get.Server.Mode).InitHandler(),
