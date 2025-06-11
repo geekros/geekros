@@ -6,7 +6,7 @@ After=syslog.target network.target
 Type=simple
 Environment="TERM=xterm-256color"
 WorkingDirectory=/opt/geekros/release
-ExecStart=/opt/geekros/release/main service
+ExecStart=/opt/geekros/release/main server
 Restart=on-failure
 
 [Install]
