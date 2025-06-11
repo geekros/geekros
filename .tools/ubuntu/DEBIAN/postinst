@@ -1,0 +1,50 @@
+#!/bin/bash
+# Copyright 2025 GEEKROS, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Execute business after installation is completed
+
+# Create a symbolic link.
+sudo ln -s /opt/geekros/backend/release/main /usr/local/bin/geekros
+
+# This script checks if a virtual environment exists at /opt/geekros/.venv.
+if [ ! -d "/opt/geekros/.venv" ]; then
+    # Delete old virtual environment
+    rm -rf /opt/geekros/.venv
+fi
+
+# Creates a new virtual environment, installs necessary Python packages, 
+cd /opt/geekros
+python3 -m venv .venv && source .venv/bin/activate && pip install --upgrade pip
+pip install colorlog logging numpy pyaudio requests pyserial websocket-client==0.48.0
+pip install --upgrade geekros -i https://mirrors.aliyun.com/pypi/simple
+deactivate
+
+# Download the llm service script
+# sudo wget -q -O /usr/local/bin/llm_service https://common.cdn.geekros.com/install/geekros/ubuntu/network/llm_service && sudo chmod +x /usr/local/bin/llm_service
+
+# Update the system's dynamic library cache. Reload the udev rules.
+sudo ldconfig && sudo udevadm control --reload-rules
+
+# Service related management
+sudo systemctl daemon-reload > /dev/null 2>&1
+
+# Service related management
+sudo systemctl enable geekros.service > /dev/null 2>&1
+sudo systemctl restart geekros.service > /dev/null 2>&1
+
+# Complete
+echo 'You can now use "geekros help" to get information on how to use it.'
+
+exit 0
