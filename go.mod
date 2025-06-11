@@ -3,7 +3,7 @@ module github.com/geekros/geekros
 go 1.23.10
 
 require (
-	github.com/geekros/server v0.0.3
+	github.com/geekros/server v0.0.0-20250611015120-7b6bfeccaa77
 	github.com/gookit/color v1.5.4
 	github.com/spf13/cobra v1.9.1
 	gopkg.in/yaml.v3 v3.0.1

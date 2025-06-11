@@ -13,6 +13,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gabriel-vasile/mimetype v1.4.8 h1:FfZ3gj38NjllZIeJAmMhr+qKL8Wu+nOoI3GqacKw1NM=
 github.com/gabriel-vasile/mimetype v1.4.8/go.mod h1:ByKUIKGjh1ODkGM1asKUbQZOLGrPjydw3hYPU2YU9t8=
+github.com/geekros/server v0.0.0-20250611015120-7b6bfeccaa77 h1:WvRB6YhqZiEtXKP7A5434q6K8tWbBLkNApaZDUhQtb4=
+github.com/geekros/server v0.0.0-20250611015120-7b6bfeccaa77/go.mod h1:iN1S7YF1EMnHiby7gFuin5sxT8qcpXmSyH2ugqCluTo=
 github.com/geekros/server v0.0.3 h1:vxtZybpC56dYlhNjc/QkFx/79y0/PjSboHLRlOf0Fr8=
 github.com/geekros/server v0.0.3/go.mod h1:c2eBYiq0sRMNcBK+ctjophmqgbEqwA7Lu3NJOVABiYc=
 github.com/gin-contrib/cors v1.7.5 h1:cXC9SmofOrRg0w9PigwGlHG3ztswH6bqq4vJVXnvYMk=
