@@ -33,6 +33,7 @@ func AuthToken(c *gin.Context) {
 	role := c.DefaultQuery("role", "")
 	if role == "" {
 		utils.Error(c, structs.EmptyData{})
+		return
 	}
 
 	data := map[string]interface{}{
@@ -42,6 +43,7 @@ func AuthToken(c *gin.Context) {
 	token, err := utils.GenerateToken(config.Get.Auth.Secret, data, config.Get.Auth.Expiration)
 	if err != nil {
 		utils.Error(c, structs.EmptyData{})
+		return
 	}
 
 	responseData.Token = token
