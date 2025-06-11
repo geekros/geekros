@@ -16,7 +16,7 @@
 # Execute business after installation is completed
 
 # Create a symbolic link.
-sudo ln -s /opt/geekros/backend/release/main /usr/local/bin/geekros
+sudo ln -s /opt/geekros/release/main /usr/local/bin/geekros
 
 # This script checks if a virtual environment exists at /opt/geekros/.venv.
 if [ ! -d "/opt/geekros/.venv" ]; then
