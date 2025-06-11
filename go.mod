@@ -3,7 +3,6 @@ module github.com/geekros/geekros
 go 1.23.10
 
 require (
-	github.com/geekros/server v0.0.0-20250611015120-7b6bfeccaa77
 	github.com/gookit/color v1.5.4
 	github.com/spf13/cobra v1.9.1
 	gopkg.in/yaml.v3 v3.0.1
@@ -14,8 +13,8 @@ require (
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
-	github.com/geekros/structure v0.0.1 // indirect
-	github.com/geekros/utils v0.0.4 // indirect
+	github.com/geekros/structure v0.0.0-20250611015330-b2e52098a207 // indirect
+	github.com/geekros/utils v0.0.0-20250611015246-bd24ee24a1b7 // indirect
 	github.com/gin-contrib/cors v1.7.5 // indirect
 	github.com/gin-contrib/sse v1.0.0 // indirect
 	github.com/gin-gonic/gin v1.10.1 // indirect
