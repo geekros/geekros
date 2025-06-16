@@ -15,8 +15,6 @@
 package command
 
 import (
-	"log"
-
 	"github.com/spf13/cobra"
 )
 
@@ -26,12 +24,26 @@ func Mcu() *cobra.Command {
 		Use:     "mcu",
 		Short:   "Microcontroller unit management module",
 		Long:    "Microcontroller unit management module",
-		Example: "geekros mcu [init|install|remove|publish]",
+		Example: "geekros mcu [init|install|uninstall|publish]",
 		Run:     McuRun,
 	}
 	return command
 }
 
 func McuRun(cmd *cobra.Command, args []string) {
-	log.Println(args)
+
+	if len(args) > 0 {
+		if args[0] == "init" {
+
+		}
+		if args[0] == "install" {
+
+		}
+		if args[0] == "uninstall" {
+
+		}
+		if args[0] == "publish" {
+
+		}
+	}
 }
