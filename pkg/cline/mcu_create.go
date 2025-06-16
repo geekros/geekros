@@ -153,7 +153,7 @@ func (m McuCreateModel) View() string {
 	case "loading":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.loading.View(), color.Gray.Text("Searching..."))
 	case "items":
-		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Up/Down to navigate, Enter to select, Esc to quit."), m.keyword.View(), m.items.View())
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Up/Down to navigate, Enter to select, Esc to quit."), m.keyword.View(), m.page.Render(m.items.View()))
 	}
 
 	return ""
