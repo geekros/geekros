@@ -102,7 +102,7 @@ func (m model) View() string {
 
 	switch m.state {
 	case 0:
-		return fmt.Sprintf("Enter phone number:\n\n%s"+color.Gray.Text("Press Esc to exit."), m.phoneInput.View())
+		return fmt.Sprintf("Enter phone number:\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), m.phoneInput.View())
 	case 1:
 		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phoneInput.Value()), m.codeInput.View())
 	case 2:
