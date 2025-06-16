@@ -103,6 +103,11 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				}
 			}
 		case tea.KeyEsc, tea.KeyCtrlC:
+			if m.state == "items" {
+				m.state = "home"
+				m.keyword.Focus()
+				return m, cmd
+			}
 			return m, tea.Quit
 		}
 	case spinner.TickMsg:
