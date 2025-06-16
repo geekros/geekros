@@ -94,6 +94,7 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch m.state {
 	case "home":
 		m.keyword, cmd = m.keyword.Update(msg)
+		m.items, cmd = m.items.Update(msg)
 	case "items":
 		m.items, cmd = m.items.Update(msg)
 	}
