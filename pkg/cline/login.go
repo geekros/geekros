@@ -23,15 +23,14 @@ import (
 	"github.com/gookit/color"
 )
 
-type model struct {
+type LoginModel struct {
 	state      string
 	phoneInput textinput.Model
 	codeInput  textinput.Model
 	err        string
-	msg        string
 }
 
-func InitModel() model {
+func InitModel() LoginModel {
 
 	phone := textinput.New()
 	phone.Placeholder = "Enter your phone number"
@@ -44,19 +43,19 @@ func InitModel() model {
 	code.CharLimit = 6
 	code.Width = 50
 
-	return model{
+	return LoginModel{
 		state:      "phone",
 		phoneInput: phone,
 		codeInput:  code,
 	}
 }
 
-func (m model) Init() tea.Cmd {
+func (m LoginModel) Init() tea.Cmd {
 
 	return textinput.Blink
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m LoginModel) Update(msg tea.Msg) (LoginModel, tea.Cmd) {
 
 	var cmd tea.Cmd
 
@@ -98,7 +97,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m model) View() string {
+func (m LoginModel) View() string {
 
 	switch m.state {
 	case "phone":
@@ -106,7 +105,7 @@ func (m model) View() string {
 	case "code":
 		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phoneInput.Value()), m.codeInput.View())
 	case "success":
-		return fmt.Sprintf(color.Green.Text("Logged in successfully.") + "\n")
+		return fmt.Sprintf(color.Gray.Text("Logged in successfully.") + "\n")
 	case "failed":
 		return fmt.Sprintf(color.Yellow.Text("Incorrect code. Press Enter to retry.") + "\n\n" + color.Gray.Text("Press Esc to exit."))
 	}
