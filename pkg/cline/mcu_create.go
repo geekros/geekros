@@ -135,7 +135,7 @@ func (m McuCreateModel) View() string {
 	case "loading":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.loading.View(), color.Gray.Text("Searching..."))
 	case "items":
-		text := fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n", m.keyword.View(), m.items.View())
+		text := fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.items.View())
 		if len(m.items.Items()) == 0 {
 			text = fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), helpStyle.Render("No results found"))
 		}
