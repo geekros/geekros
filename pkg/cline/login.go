@@ -32,8 +32,6 @@ const (
 	failed
 )
 
-const mockCode = "123456"
-
 type model struct {
 	state      state
 	phoneInput textinput.Model
