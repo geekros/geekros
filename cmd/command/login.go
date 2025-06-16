@@ -14,7 +14,14 @@
 
 package command
 
-import "github.com/spf13/cobra"
+import (
+	"log"
+	"os"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/geekros/geekros/pkg/cline"
+	"github.com/spf13/cobra"
+)
 
 func Login() *cobra.Command {
 
@@ -30,4 +37,8 @@ func Login() *cobra.Command {
 
 func LoginRun(cmd *cobra.Command, args []string) {
 
+	if _, err := tea.NewProgram(cline.InitModel()).Run(); err != nil {
+		log.Println("could not start program: %s\n", err)
+		os.Exit(1)
+	}
 }
