@@ -16,12 +16,20 @@ package cline
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/spinner"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+)
+
+type (
+	onItemsRequestMsg struct {
+		success bool
+		err     string
+	}
 )
 
 type item struct {
@@ -85,11 +93,28 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			switch m.state {
 			case "home":
 				if len(m.keyword.Value()) > 0 {
-					m.state = "items"
+					m.state = "loading"
+					return m, tea.Batch(
+						m.loading.Tick,
+						onItemsRequest(m.keyword.Value()),
+					)
 				}
 			}
 		case tea.KeyEsc, tea.KeyCtrlC:
 			return m, tea.Quit
+		}
+	case spinner.TickMsg:
+		if m.state == "loading" {
+			m.loading, cmd = m.loading.Update(msg)
+			return m, cmd
+		}
+	case onItemsRequestMsg:
+		if msg.success {
+			m.state = "items"
+		} else {
+			m.keyword.Focus()
+			m.err = msg.err
+			m.state = "not"
 		}
 	}
 
@@ -110,9 +135,19 @@ func (m McuCreateModel) View() string {
 	switch m.state {
 	case "home":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
+	case "loading":
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.loading.View())
+	case "not":
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), helpStyle.Render("No results found"))
 	case "items":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n", m.keyword.View(), m.items.View())
 	}
 
 	return ""
+}
+
+func onItemsRequest(keyword string) tea.Cmd {
+	return tea.Tick(time.Second*2, func(t time.Time) tea.Msg {
+		return onItemsRequestMsg{true, ""}
+	})
 }
