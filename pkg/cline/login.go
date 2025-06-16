@@ -107,13 +107,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	switch m.state {
 	case inputPhone:
-		return fmt.Sprintf("Enter phone number:\n\n%s\n\n%s\n\nPress Esc to exit.", m.phoneInput.View(), m.err)
+		return fmt.Sprintf("Enter phone number:\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), m.phoneInput.View())
 	case inputCode:
-		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n%s\n\nPress Esc to exit.", m.phoneInput.Value(), m.codeInput.View(), m.err)
+		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), m.phoneInput.Value(), m.codeInput.View())
 	case success:
 		return "Logged in successfully!"
 	case failed:
-		return "Incorrect code. Press Enter to retry.\n\nPress Esc to exit."
+		return "Incorrect code. Press Enter to retry.\n\n" + color.Gray.Text("Press Esc to exit.")
 	}
 	return ""
 }
