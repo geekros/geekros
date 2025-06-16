@@ -12,9 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package version
-
-const Name = "geekros"
-const Describe = "Real-Time Human-Computer Interaction Applications"
-const Site = "https://www.geekros.com"
-const Number = "0.0.1"
+package cline

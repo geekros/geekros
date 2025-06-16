@@ -12,9 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package version
+package command
 
-const Name = "geekros"
-const Describe = "Real-Time Human-Computer Interaction Applications"
-const Site = "https://www.geekros.com"
-const Number = "0.0.1"
+import "github.com/spf13/cobra"
+
+func MCU() *cobra.Command {
+
+	command := &cobra.Command{
+		Use:     "mcu",
+		Short:   "Microcontroller unit management module",
+		Long:    "Microcontroller unit management module",
+		Example: "geekros mcu [init|install|remove|login|publish]",
+		Run:     MCURun,
+	}
+	return command
+}
+
+func MCURun(cmd *cobra.Command, args []string) {
+
+}

@@ -42,6 +42,7 @@ func serverRun(cmd *cobra.Command, args []string) {
 	config.Get = config.New().LoadConfig()
 
 	server.Get = server.New()
+
 	server.Get.Start(func() {
 		log.Println(color.Gray.Text("started server"))
 	}, func() {
