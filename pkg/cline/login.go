@@ -106,7 +106,7 @@ func (m model) View() string {
 	case 1:
 		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phoneInput.Value()), m.codeInput.View())
 	case 2:
-		return color.Green.Text("Logged in successfully.")
+		return fmt.Sprintf(color.Green.Text("Logged in successfully."))
 	case 3:
 		return color.Yellow.Text("Incorrect code. Press Enter to retry.") + "\n\n" + color.Gray.Text("Press Esc to exit.")
 	}
