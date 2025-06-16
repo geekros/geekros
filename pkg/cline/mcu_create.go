@@ -48,6 +48,8 @@ type McuCreateModel struct {
 	keyword textinput.Model
 	items   list.Model
 	loading spinner.Model
+	width   int
+	height  int
 	err     string
 }
 
@@ -124,9 +126,12 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.items = list.New(msg.items, list.NewDefaultDelegate(), 0, 0)
 			m.items.Title = "Search Results"
 			m.items.SetShowHelp(false)
+			m.items.SetSize(m.width, m.height-8)
 			m.state = "items"
 		}
 	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
 		m.items.SetSize(msg.Width, msg.Height-8)
 	}
 
