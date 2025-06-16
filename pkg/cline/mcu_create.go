@@ -124,6 +124,8 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.items = list.New(msg.items, list.NewDefaultDelegate(), 0, 0)
 			m.items.Title = "Search Results"
 			m.items.SetShowHelp(false)
+			m.items.SetWidth(100)
+			m.items.SetHeight(10)
 			m.state = "items"
 		}
 	}
