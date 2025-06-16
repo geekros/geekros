@@ -33,6 +33,10 @@ func main() {
 
 	cmd.CompletionOptions.HiddenDefaultCmd = true
 
+	cmd.SetHelpCommand(&cobra.Command{
+		Hidden: true,
+	})
+
 	cmd.AddCommand(command.Version())
 
 	cmd.AddCommand(command.Server())
