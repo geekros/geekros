@@ -29,7 +29,6 @@ func Mcu() *cobra.Command {
 		Short:   "Microcontroller unit management module",
 		Long:    "Microcontroller unit management module",
 		Example: "geekros mcu [create|install|uninstall|publish]",
-		Args:    cobra.MaximumNArgs(1),
 		ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]string, cobra.ShellCompDirective) {
 			return []string{"create", "install", "uninstall", "publish"}, cobra.ShellCompDirectiveNoFileComp
 		},

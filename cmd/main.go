@@ -29,14 +29,6 @@ func main() {
 		Use:   version.Name,
 		Short: version.Describe,
 		Long:  fmt.Sprintf("%s - %s %s (%s)", version.Name, version.Describe, version.Number, version.Site),
-		Run: func(cmd *cobra.Command, args []string) {
-			switch args[0] {
-			case "bash":
-				cmd.GenBashCompletion(os.Stdout)
-			case "zsh":
-				cmd.GenZshCompletion(os.Stdout)
-			}
-		},
 	}
 
 	cmd.CompletionOptions.HiddenDefaultCmd = true
@@ -52,6 +44,21 @@ func main() {
 	cmd.AddCommand(command.Login())
 
 	cmd.AddCommand(command.Mcu())
+
+	cmd.AddCommand(&cobra.Command{
+		Use:       "completion [bash|zsh]",
+		Short:     "Generate shell completion scripts",
+		Args:      cobra.ExactValidArgs(1),
+		ValidArgs: []string{"bash", "zsh"},
+		Run: func(c *cobra.Command, args []string) {
+			switch args[0] {
+			case "bash":
+				cmd.GenBashCompletion(os.Stdout)
+			case "zsh":
+				cmd.GenZshCompletion(os.Stdout)
+			}
+		},
+	})
 
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)
