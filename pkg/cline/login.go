@@ -23,17 +23,8 @@ import (
 	"github.com/gookit/color"
 )
 
-type state int
-
-const (
-	inputPhone state = iota
-	inputCode
-	success
-	failed
-)
-
 type model struct {
-	state      state
+	state      int
 	phoneInput textinput.Model
 	codeInput  textinput.Model
 	err        string
@@ -41,6 +32,7 @@ type model struct {
 }
 
 func InitModel() model {
+
 	phone := textinput.New()
 	phone.Placeholder = "Enter your phone number"
 	phone.CharLimit = 11
@@ -53,17 +45,19 @@ func InitModel() model {
 	code.Width = 50
 
 	return model{
-		state:      inputPhone,
+		state:      0,
 		phoneInput: phone,
 		codeInput:  code,
 	}
 }
 
 func (m model) Init() tea.Cmd {
+
 	return textinput.Blink
 }
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+
 	var cmd tea.Cmd
 
 	switch msg := msg.(type) {
@@ -71,23 +65,23 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.Type {
 		case tea.KeyEnter:
 			switch m.state {
-			case inputPhone:
+			case 0:
 				if len(m.phoneInput.Value()) != 11 {
 					m.err = color.Yellow.Text("Invalid phone number.")
 					return m, nil
 				}
-				m.state = inputCode
+				m.state = 1
 				m.codeInput.Focus()
-			case inputCode:
-				if m.codeInput.Value() == mockCode {
-					m.state = success
+			case 1:
+				if m.codeInput.Value() == "123456" {
+					m.state = 2
 					return m, tea.Quit
 				} else {
-					m.state = failed
+					m.state = 3
 				}
-			case failed:
+			case 3:
 				m.codeInput.SetValue("")
-				m.state = inputCode
+				m.state = 1
 			}
 		case tea.KeyEsc, tea.KeyCtrlC:
 			return m, tea.Quit
@@ -95,24 +89,27 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	}
 
 	switch m.state {
-	case inputPhone:
+	case 0:
 		m.phoneInput, cmd = m.phoneInput.Update(msg)
-	case inputCode:
+	case 1:
 		m.codeInput, cmd = m.codeInput.Update(msg)
 	}
+
 	return m, cmd
 }
 
 func (m model) View() string {
+
 	switch m.state {
-	case inputPhone:
+	case 0:
 		return fmt.Sprintf("Enter phone number:\n\n%s"+color.Gray.Text("Press Esc to exit."), m.phoneInput.View())
-	case inputCode:
+	case 1:
 		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phoneInput.Value()), m.codeInput.View())
-	case success:
+	case 2:
 		return color.Green.Text("Logged in successfully.")
-	case failed:
+	case 3:
 		return color.Yellow.Text("Incorrect code. Press Enter to retry.") + "\n\n" + color.Gray.Text("Press Esc to exit.")
 	}
+
 	return ""
 }
