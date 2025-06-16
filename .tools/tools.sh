@@ -88,6 +88,9 @@ on_publish(){
 
     sudo chmod +x ./debian/etc/update-motd.d/*
 
+    sudo cp /usr/local/bin/xmake ./debian/usr/local/bin/
+    sudo cp -r /usr/local/share/xmake/* ./debian/usr/local/share/xmake/
+
     sudo cp -r /usr/local/lib/libstlink* ./debian/usr/local/lib/
     sudo cp -r /usr/local/bin/st-* ./debian/usr/local/bin/
     sudo cp -r /usr/local/bin/st-* ./debian/usr/local/bin/
