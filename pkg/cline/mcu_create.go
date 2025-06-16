@@ -23,6 +23,7 @@ import (
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/gookit/color"
 )
 
 type (
@@ -111,10 +112,6 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case onItemsRequestMsg:
 		if msg.success {
 			m.state = "items"
-		} else {
-			m.keyword.Focus()
-			m.err = msg.err
-			m.state = "not"
 		}
 	}
 
@@ -136,11 +133,13 @@ func (m McuCreateModel) View() string {
 	case "home":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
 	case "loading":
-		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.loading.View())
-	case "not":
-		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), helpStyle.Render("No results found"))
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.loading.View(), color.Gray.Text("Searching..."))
 	case "items":
-		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n", m.keyword.View(), m.items.View())
+		text := fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n", m.keyword.View(), m.items.View())
+		if len(m.items.Items()) == 0 {
+			text = fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), helpStyle.Render("No results found"))
+		}
+		return text
 	}
 
 	return ""
