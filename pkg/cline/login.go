@@ -112,7 +112,7 @@ func (m model) View() string {
 	case success:
 		return fmt.Sprintf(color.Green.Text("Logged in successfully.") + "\n\n")
 	case failed:
-		return color.Yellow.Text("Incorrect code. Press Enter to retry.") + "\n\n" + color.Gray.Text("Press Esc to exit.")
+		return fmt.Sprintf(color.Yellow.Text("Incorrect code. Press Enter to retry.") + "\n\n" + color.Gray.Text("Press Esc to exit."))
 	}
 	return ""
 }
