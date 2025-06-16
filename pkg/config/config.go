@@ -29,6 +29,7 @@ type Config struct {
 	Workspace string  `yaml:"-"`
 	Runtime   string  `yaml:"-"`
 	Server    service `yaml:"server"`
+	Backend   backend `yaml:"backend"`
 	Auth      auth    `yaml:"auth"`
 }
 
@@ -37,6 +38,10 @@ type service struct {
 	Port         int           `yaml:"port"`
 	ReadTimeout  time.Duration `yaml:"read_timeout"`
 	WriteTimeout time.Duration `yaml:"write_timeout"`
+}
+
+type backend struct {
+	Host string `yaml:"host"`
 }
 
 type auth struct {
