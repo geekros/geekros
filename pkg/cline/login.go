@@ -132,7 +132,6 @@ func (m LoginModel) Update(msg tea.Msg) (LoginModel, tea.Cmd) {
 			m.state = "failed"
 		}
 	}
-	}
 
 	switch m.state {
 	case "phone":
