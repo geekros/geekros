@@ -78,7 +78,7 @@ func (m LoginModel) Init() tea.Cmd {
 	)
 }
 
-func (m LoginModel) Update(msg tea.Msg) (LoginModel, tea.Cmd) {
+func (m LoginModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	var cmd tea.Cmd
 
