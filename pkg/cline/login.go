@@ -159,7 +159,7 @@ func (m LoginModel) View() string {
 	case "verifying":
 		return fmt.Sprintf("Enter code (sent to %s):\n\n%s %s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phoneInput.Value()), m.Loading.View(), color.Gray.Text("Verifying code..."))
 	case "success":
-		return fmt.Sprintf(color.Gray.Text("Logged in successfully.") + "\n")
+		return fmt.Sprintf(color.Green.Text("Logged in successfully.") + "\n")
 	case "failed":
 		return fmt.Sprintf(color.Yellow.Text("Incorrect code. Press Enter to retry.") + "\n\n" + color.Gray.Text("Press Esc to exit."))
 	}
