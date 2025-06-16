@@ -23,20 +23,17 @@ import (
 	"time"
 )
 
-var CloudServiceHost = "https://backend.geekros.com"
-
 type ResponseService struct {
-	Code    int     `json:"code"`
-	Data    service `json:"data"`
-	Message string  `json:"message"`
+	Code    int    `json:"code"`
+	Data    data   `json:"data"`
+	Message string `json:"message"`
 }
 
-type service struct {
-	Sign  string `json:"sign"`
+type data struct {
 	Token string `json:"token"`
 }
 
-func Service(path string, method string, parameters map[string]string, data map[string]string) (*http.Response, ResponseService, error) {
+func Service(host string, path string, method string, parameters map[string]string, data map[string]string) (*http.Response, ResponseService, error) {
 	responseData := ResponseService{}
 	responseData.Code = 10000
 
@@ -45,7 +42,7 @@ func Service(path string, method string, parameters map[string]string, data map[
 		bodyData, _ = json.Marshal(data)
 	}
 
-	request, err := http.NewRequest(method, CloudServiceHost+path, bytes.NewReader(bodyData))
+	request, err := http.NewRequest(method, host+path, bytes.NewReader(bodyData))
 	if err != nil {
 		return nil, responseData, err
 	}
