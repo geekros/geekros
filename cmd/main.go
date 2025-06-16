@@ -29,6 +29,14 @@ func main() {
 		Use:   version.Name,
 		Short: version.Describe,
 		Long:  fmt.Sprintf("%s - %s %s (%s)", version.Name, version.Describe, version.Number, version.Site),
+		Run: func(cmd *cobra.Command, args []string) {
+			switch args[0] {
+			case "bash":
+				cmd.GenBashCompletion(os.Stdout)
+			case "zsh":
+				cmd.GenZshCompletion(os.Stdout)
+			}
+		},
 	}
 
 	cmd.CompletionOptions.HiddenDefaultCmd = true
