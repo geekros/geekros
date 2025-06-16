@@ -16,18 +16,18 @@ package command
 
 import "github.com/spf13/cobra"
 
-func MCU() *cobra.Command {
+func Mcu() *cobra.Command {
 
 	command := &cobra.Command{
 		Use:     "mcu",
 		Short:   "Microcontroller unit management module",
 		Long:    "Microcontroller unit management module",
-		Example: "geekros mcu [init|install|remove|login|publish]",
-		Run:     MCURun,
+		Example: "geekros mcu [init|install|remove|publish]",
+		Run:     McuRun,
 	}
 	return command
 }
 
-func MCURun(cmd *cobra.Command, args []string) {
+func McuRun(cmd *cobra.Command, args []string) {
 
 }

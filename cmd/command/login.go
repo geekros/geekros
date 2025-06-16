@@ -12,36 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package command
 
-import (
-	"fmt"
-	"os"
+import "github.com/spf13/cobra"
 
-	"github.com/geekros/geekros/cmd/command"
-	"github.com/geekros/geekros/pkg/version"
-	"github.com/spf13/cobra"
-)
+func Login() *cobra.Command {
 
-func main() {
-
-	cmd := &cobra.Command{
-		Use:   version.Name,
-		Short: version.Describe,
-		Long:  fmt.Sprintf("%s - %s %s (%s)", version.Name, version.Describe, version.Number, version.Site),
+	command := &cobra.Command{
+		Use:     "login",
+		Short:   "Authorize your account",
+		Long:    "Authorize your account",
+		Example: "geekros login [phone]",
+		Run:     LoginRun,
 	}
+	return command
+}
 
-	cmd.CompletionOptions.HiddenDefaultCmd = true
+func LoginRun(cmd *cobra.Command, args []string) {
 
-	cmd.AddCommand(command.Version())
-
-	cmd.AddCommand(command.Server())
-
-	cmd.AddCommand(command.Login())
-
-	cmd.AddCommand(command.Mcu())
-
-	if err := cmd.Execute(); err != nil {
-		os.Exit(1)
-	}
 }
