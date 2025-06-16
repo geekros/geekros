@@ -112,7 +112,7 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	case onItemsRequestMsg:
 		if msg.success {
-			if len(m.items.Items()) == 0 {
+			if len(msg.items) == 0 {
 				m.state = "home"
 				m.keyword.Focus()
 				return m, cmd
