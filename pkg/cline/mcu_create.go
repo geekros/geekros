@@ -102,6 +102,11 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 						m.onItemsRequest(m.keyword.Value()),
 					)
 				}
+			case "items":
+				i, ok := m.items.SelectedItem().(item)
+				if ok {
+
+				}
 			}
 		case tea.KeyEsc, tea.KeyCtrlC:
 			if m.state == "items" {
