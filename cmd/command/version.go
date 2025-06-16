@@ -16,6 +16,7 @@ package command
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/geekros/geekros/pkg/version"
 	"github.com/gookit/color"
@@ -36,5 +37,5 @@ func Version() *cobra.Command {
 }
 
 func versionRun(cmd *cobra.Command, args []string) {
-	fmt.Println(color.Gray.Text(fmt.Sprintf("%s %s (%s)", version.Name, version.Number, version.Site)))
+	log.Println(color.Gray.Text(fmt.Sprintf("%s %s (%s)", version.Name, version.Number, version.Site)))
 }
