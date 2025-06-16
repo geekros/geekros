@@ -28,7 +28,7 @@ func Login() *cobra.Command {
 		Use:     "login",
 		Short:   "Authorize your account",
 		Long:    "Authorize your account",
-		Example: "geekros login [phone]",
+		Example: "geekros login",
 		Run:     LoginRun,
 	}
 	return command

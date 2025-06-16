@@ -44,11 +44,13 @@ func InitModel() model {
 	phone := textinput.New()
 	phone.Placeholder = "Phone number"
 	phone.CharLimit = 11
+	phone.Width = 100
 	phone.Focus()
 
 	code := textinput.New()
 	code.Placeholder = "Verification code"
 	code.CharLimit = 6
+	code.Width = 50
 
 	return model{
 		state:      inputPhone,
@@ -81,6 +83,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case inputCode:
 				if m.codeInput.Value() == mockCode {
 					m.state = success
+					return m, tea.Quit
 				} else {
 					m.state = failed
 				}
