@@ -14,7 +14,11 @@
 
 package command
 
-import "github.com/spf13/cobra"
+import (
+	"log"
+
+	"github.com/spf13/cobra"
+)
 
 func Mcu() *cobra.Command {
 
@@ -29,5 +33,5 @@ func Mcu() *cobra.Command {
 }
 
 func McuRun(cmd *cobra.Command, args []string) {
-
+	log.Println(args)
 }
