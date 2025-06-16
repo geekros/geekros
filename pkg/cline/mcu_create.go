@@ -112,7 +112,9 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case onItemsRequestMsg:
 		if msg.success {
 			if len(m.items.Items()) == 0 {
+				m.state = "home"
 				m.keyword.Focus()
+				return m, cmd
 			}
 			m.state = "items"
 		}
@@ -141,11 +143,7 @@ func (m McuCreateModel) View() string {
 	case "loading":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.loading.View(), color.Gray.Text("Searching..."))
 	case "items":
-		text := fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.items.View())
-		if len(m.items.Items()) == 0 {
-			text = fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n%s"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), helpStyle.Render("No results found"))
-		}
-		return text
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.items.View())
 	}
 
 	return ""
