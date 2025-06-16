@@ -36,7 +36,7 @@ func Login() *cobra.Command {
 
 func LoginRun(cmd *cobra.Command, args []string) {
 
-	if _, err := tea.NewProgram(cline.InitModel()).Run(); err != nil {
+	if _, err := tea.NewProgram(cline.InitLoginModel()).Run(); err != nil {
 		os.Exit(1)
 	}
 }

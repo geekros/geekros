@@ -15,6 +15,10 @@
 package command
 
 import (
+	"os"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/geekros/geekros/pkg/cline"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +28,7 @@ func Mcu() *cobra.Command {
 		Use:     "mcu",
 		Short:   "Microcontroller unit management module",
 		Long:    "Microcontroller unit management module",
-		Example: "geekros mcu [init|install|uninstall|publish]",
+		Example: "geekros mcu [create|install|uninstall|publish]",
 		Run:     McuRun,
 	}
 	return command
@@ -33,8 +37,10 @@ func Mcu() *cobra.Command {
 func McuRun(cmd *cobra.Command, args []string) {
 
 	if len(args) > 0 {
-		if args[0] == "init" {
-
+		if args[0] == "create" {
+			if _, err := tea.NewProgram(cline.InitMcuCreateModel()).Run(); err != nil {
+				os.Exit(1)
+			}
 		}
 		if args[0] == "install" {
 

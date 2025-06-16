@@ -45,7 +45,7 @@ type LoginModel struct {
 	err     string
 }
 
-func InitModel() LoginModel {
+func InitLoginModel() LoginModel {
 
 	phone := textinput.New()
 	phone.Placeholder = "Enter your phone number"
@@ -149,7 +149,9 @@ func (m LoginModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m LoginModel) View() string {
+
 	helpStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("241")).Margin(1, 0)
+
 	switch m.state {
 	case "phone":
 		return fmt.Sprintf("Enter phone number:\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.phone.View())
