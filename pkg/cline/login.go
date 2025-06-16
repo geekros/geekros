@@ -19,6 +19,7 @@ import (
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/geekros/geekros/pkg/utils"
 	"github.com/gookit/color"
 )
 
@@ -107,13 +108,13 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	switch m.state {
 	case inputPhone:
-		return fmt.Sprintf("Enter phone number:\n\n%s", m.phoneInput.View())
+		return fmt.Sprintf("Enter phone number:\n\n%s"+color.Gray.Text("Press Esc to exit."), m.phoneInput.View())
 	case inputCode:
-		return fmt.Sprintf("Enter code (sent to %s):\n\n%s", m.phoneInput.Value(), m.codeInput.View())
+		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phoneInput.Value()), m.codeInput.View())
 	case success:
-		return "Logged in successfully!"
+		return color.Green.Text("Logged in successfully.")
 	case failed:
-		return "Incorrect code. Press Enter to retry."
+		return color.Yellow.Text("Incorrect code. Press Enter to retry.") + "\n\n" + color.Gray.Text("Press Esc to exit.")
 	}
 	return ""
 }
