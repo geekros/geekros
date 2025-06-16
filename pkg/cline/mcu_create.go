@@ -124,9 +124,6 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case "home":
 		m.keyword, cmd = m.keyword.Update(msg)
 	case "items":
-		if len(m.items.Items()) == 0 {
-			m.keyword, cmd = m.keyword.Update(msg)
-		}
 		m.items, cmd = m.items.Update(msg)
 	}
 
