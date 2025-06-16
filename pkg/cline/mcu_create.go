@@ -64,6 +64,13 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.Type {
+		case tea.KeyEnter:
+			switch m.state {
+			case "home":
+				if len(m.keyword.Value()) == 0 {
+
+				}
+			}
 		case tea.KeyEsc, tea.KeyCtrlC:
 			return m, tea.Quit
 		}
@@ -84,6 +91,8 @@ func (m McuCreateModel) View() string {
 	switch m.state {
 	case "home":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
+	case "list":
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
 	}
 
 	return ""
