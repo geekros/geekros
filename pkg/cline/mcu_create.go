@@ -48,7 +48,6 @@ type McuCreateModel struct {
 	keyword textinput.Model
 	items   list.Model
 	loading spinner.Model
-	page    lipgloss.Style
 	err     string
 }
 
@@ -73,7 +72,6 @@ func InitMcuCreateModel() McuCreateModel {
 		keyword: keyword,
 		items:   items,
 		loading: loading,
-		page:    lipgloss.NewStyle().Margin(1, 2),
 	}
 }
 
@@ -126,11 +124,11 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.items = list.New(msg.items, list.NewDefaultDelegate(), 0, 0)
 			m.items.Title = "Search Results"
 			m.items.SetShowHelp(false)
+			m.items.SetSize(30, 10)
 			m.state = "items"
 		}
 	case tea.WindowSizeMsg:
-		h, v := m.page.GetFrameSize()
-		m.items.SetSize(msg.Width-h, msg.Height-v)
+		m.items.SetSize(msg.Width, msg.Height-8)
 	}
 
 	switch m.state {
@@ -153,7 +151,7 @@ func (m McuCreateModel) View() string {
 	case "loading":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.loading.View(), color.Gray.Text("Searching..."))
 	case "items":
-		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Up/Down to navigate, Enter to select, Esc to quit."), m.keyword.View(), m.page.Render(m.items.View()))
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Up/Down to navigate, Enter to select, Esc to quit."), m.keyword.View(), m.items.View())
 	}
 
 	return ""
