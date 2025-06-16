@@ -17,15 +17,26 @@ package cline
 import (
 	"fmt"
 
+	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/spinner"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
+type item struct {
+	title string
+	desc  string
+}
+
+func (i item) Title() string       { return i.title }
+func (i item) Description() string { return i.desc }
+func (i item) FilterValue() string { return i.title }
+
 type McuCreateModel struct {
 	state   string
 	keyword textinput.Model
+	items   list.Model
 	loading spinner.Model
 	err     string
 }
@@ -38,6 +49,9 @@ func InitMcuCreateModel() McuCreateModel {
 	keyword.Width = 100
 	keyword.Focus()
 
+	items := list.New([]list.Item{}, list.NewDefaultDelegate(), 0, 0)
+	items.Title = "Search Results"
+
 	loading := spinner.New()
 	loading.Spinner = spinner.Dot
 	loading.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
@@ -45,6 +59,7 @@ func InitMcuCreateModel() McuCreateModel {
 	return McuCreateModel{
 		state:   "home",
 		keyword: keyword,
+		items:   items,
 		loading: loading,
 	}
 }
@@ -68,7 +83,7 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			switch m.state {
 			case "home":
 				if len(m.keyword.Value()) == 0 {
-
+					m.state = "items"
 				}
 			}
 		case tea.KeyEsc, tea.KeyCtrlC:
@@ -79,6 +94,8 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch m.state {
 	case "home":
 		m.keyword, cmd = m.keyword.Update(msg)
+	case "items":
+		m.items, cmd = m.items.Update(msg)
 	}
 
 	return m, cmd
@@ -91,8 +108,8 @@ func (m McuCreateModel) View() string {
 	switch m.state {
 	case "home":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
-	case "list":
-		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
+	case "items":
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.items.View())
 	}
 
 	return ""
