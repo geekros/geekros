@@ -82,7 +82,7 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case tea.KeyEnter:
 			switch m.state {
 			case "home":
-				if len(m.keyword.Value()) == 0 {
+				if len(m.keyword.Value()) >= 0 {
 					m.state = "items"
 				}
 			}
@@ -107,7 +107,8 @@ func (m McuCreateModel) View() string {
 
 	switch m.state {
 	case "home":
-		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
+		//return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.items.View())
 	case "items":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.items.View())
 	}
