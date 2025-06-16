@@ -110,6 +110,7 @@ func (m LoginModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case "failed":
 				m.code.SetValue("")
 				m.state = "code"
+				m.code.Focus()
 			}
 		case tea.KeyEsc, tea.KeyCtrlC:
 			return m, tea.Quit
