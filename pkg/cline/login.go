@@ -38,11 +38,11 @@ type (
 )
 
 type LoginModel struct {
-	state      string
-	phoneInput textinput.Model
-	codeInput  textinput.Model
-	Loading    spinner.Model
-	err        string
+	state   string
+	phone   textinput.Model
+	code    textinput.Model
+	loading spinner.Model
+	err     string
 }
 
 func InitModel() LoginModel {
@@ -63,10 +63,10 @@ func InitModel() LoginModel {
 	loading.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
 
 	return LoginModel{
-		state:      "phone",
-		phoneInput: phone,
-		codeInput:  code,
-		Loading:    loading,
+		state:   "phone",
+		phone:   phone,
+		code:    code,
+		loading: loading,
 	}
 }
 
@@ -74,7 +74,7 @@ func (m LoginModel) Init() tea.Cmd {
 
 	return tea.Batch(
 		textinput.Blink,
-		m.Loading.Tick,
+		m.loading.Tick,
 	)
 }
 
@@ -88,27 +88,27 @@ func (m LoginModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case tea.KeyEnter:
 			switch m.state {
 			case "phone":
-				if len(m.phoneInput.Value()) != 11 {
+				if len(m.phone.Value()) != 11 {
 					m.err = color.Yellow.Text("Invalid phone number.")
 					return m, nil
 				}
 				m.state = "sending"
 				return m, tea.Batch(
-					m.Loading.Tick,
-					sendCodeRequest(m.phoneInput.Value()),
+					m.loading.Tick,
+					sendCodeRequest(m.phone.Value()),
 				)
 			case "code":
-				if m.codeInput.Value() != "123456" {
+				if m.code.Value() != "123456" {
 					m.state = "failed"
 					return m, nil
 				}
 				m.state = "verifying"
 				return m, tea.Batch(
-					m.Loading.Tick,
-					verifyCodeRequest(m.phoneInput.Value(), m.codeInput.Value()),
+					m.loading.Tick,
+					verifyCodeRequest(m.phone.Value(), m.code.Value()),
 				)
 			case "failed":
-				m.codeInput.SetValue("")
+				m.code.SetValue("")
 				m.state = "code"
 			}
 		case tea.KeyEsc, tea.KeyCtrlC:
@@ -116,13 +116,13 @@ func (m LoginModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	case spinner.TickMsg:
 		if m.state == "sending" || m.state == "verifying" {
-			m.Loading, cmd = m.Loading.Update(msg)
+			m.loading, cmd = m.loading.Update(msg)
 			return m, cmd
 		}
 	case sendCodeResponseMsg:
 		if msg.success {
 			m.state = "code"
-			m.codeInput.Focus()
+			m.code.Focus()
 		} else {
 			m.err = msg.err
 			m.state = "phone"
@@ -139,9 +139,9 @@ func (m LoginModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	switch m.state {
 	case "phone":
-		m.phoneInput, cmd = m.phoneInput.Update(msg)
+		m.phone, cmd = m.phone.Update(msg)
 	case "code":
-		m.codeInput, cmd = m.codeInput.Update(msg)
+		m.code, cmd = m.code.Update(msg)
 	}
 
 	return m, cmd
@@ -151,13 +151,13 @@ func (m LoginModel) View() string {
 
 	switch m.state {
 	case "phone":
-		return fmt.Sprintf("Enter phone number:\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), m.phoneInput.View())
+		return fmt.Sprintf("Enter phone number:\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), m.phone.View())
 	case "code":
-		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phoneInput.Value()), m.codeInput.View())
+		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phone.Value()), m.code.View())
 	case "sending":
-		return fmt.Sprintf("Enter phone number:\n\n%s %s\n\n"+color.Gray.Text("Press Esc to exit."), m.Loading.View(), color.Gray.Text("Sending verification code..."))
+		return fmt.Sprintf("Enter phone number:\n\n%s %s\n\n"+color.Gray.Text("Press Esc to exit."), m.loading.View(), color.Gray.Text("Sending verification code..."))
 	case "verifying":
-		return fmt.Sprintf("Enter code (sent to %s):\n\n%s %s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phoneInput.Value()), m.Loading.View(), color.Gray.Text("Verifying code..."))
+		return fmt.Sprintf("Enter code (sent to %s):\n\n%s %s\n\n"+color.Gray.Text("Press Esc to exit."), utils.PhoneToFormat(m.phone.Value()), m.loading.View(), color.Gray.Text("Verifying code..."))
 	case "success":
 		return fmt.Sprintf(color.Green.Text("Logged in successfully.") + "\n")
 	case "failed":
