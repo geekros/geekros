@@ -84,7 +84,7 @@ func (m McuCreateModel) View() string {
 	switch m.state {
 	case "home":
 		text := fmt.Sprintf("Please select a basic microcontroller\n\n")
-		text += fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
+		text += fmt.Sprintf("Microcontroller model:\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View())
 		return text
 	}
 
