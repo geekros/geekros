@@ -19,6 +19,7 @@ import (
 
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/gookit/color"
 )
 
 type state int
@@ -42,13 +43,13 @@ type model struct {
 
 func InitModel() model {
 	phone := textinput.New()
-	phone.Placeholder = "Phone number"
+	phone.Placeholder = "Enter your phone number"
 	phone.CharLimit = 11
 	phone.Width = 100
 	phone.Focus()
 
 	code := textinput.New()
-	code.Placeholder = "Verification code"
+	code.Placeholder = "Enter verification code"
 	code.CharLimit = 6
 	code.Width = 50
 
@@ -73,13 +74,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			switch m.state {
 			case inputPhone:
 				if len(m.phoneInput.Value()) != 11 {
-					m.err = "Invalid phone number"
+					m.err = color.Yellow.Text("Invalid phone number.")
 					return m, nil
 				}
 				m.state = inputCode
 				m.codeInput.Focus()
-				m.msg = "Code sent (mock: 123456)"
-				m.err = ""
 			case inputCode:
 				if m.codeInput.Value() == mockCode {
 					m.state = success
@@ -108,11 +107,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m model) View() string {
 	switch m.state {
 	case inputPhone:
-		return fmt.Sprintf("Enter phone number:\n\n%s\n\n%s", m.phoneInput.View(), m.err)
+		return fmt.Sprintf("Enter phone number:\n\n%s\n\n%s\n\nPress Esc to exit.", m.phoneInput.View(), m.err)
 	case inputCode:
-		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n%s", m.phoneInput.Value(), m.codeInput.View(), m.msg)
+		return fmt.Sprintf("Enter code (sent to %s):\n\n%s\n\n%s\n\nPress Esc to exit.", m.phoneInput.Value(), m.codeInput.View(), m.err)
 	case success:
-		return "Logged in successfully!\n\nPress Esc to exit."
+		return "Logged in successfully!"
 	case failed:
 		return "Incorrect code. Press Enter to retry.\n\nPress Esc to exit."
 	}
