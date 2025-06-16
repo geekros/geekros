@@ -97,7 +97,7 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.state = "loading"
 					return m, tea.Batch(
 						m.loading.Tick,
-						onItemsRequest(m.keyword.Value()),
+						m.onItemsRequest(m.keyword.Value()),
 					)
 				}
 			}
@@ -140,14 +140,21 @@ func (m McuCreateModel) View() string {
 	case "loading":
 		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.loading.View(), color.Gray.Text("Searching..."))
 	case "items":
-		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Press Esc to exit."), m.keyword.View(), m.items.View())
+		return fmt.Sprintf("Please select a basic microcontroller model:\n\n%s\n\n%s\n"+helpStyle.Render("Up/Down to navigate, Enter to select, Esc to quit."), m.keyword.View(), m.items.View())
 	}
 
 	return ""
 }
 
-func onItemsRequest(keyword string) tea.Cmd {
+func (m McuCreateModel) onItemsRequest(keyword string) tea.Cmd {
 	return tea.Tick(time.Second*2, func(t time.Time) tea.Msg {
+		items := []list.Item{
+			item{title: "Raspberry Pi’s", desc: "I have ’em all over my house"},
+			item{title: "Nutella", desc: "It's good on toast"},
+			item{title: "Bitter melon", desc: "It cools you down"},
+			item{title: "Nice socks", desc: "And by that I mean socks without holes"},
+		}
+		m.items = list.New(items, list.NewDefaultDelegate(), 0, 0)
 		return onItemsRequestMsg{true, ""}
 	})
 }
