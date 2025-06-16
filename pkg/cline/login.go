@@ -16,17 +16,32 @@ package cline
 
 import (
 	"fmt"
+	"time"
 
+	"github.com/charmbracelet/bubbles/spinner"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 	"github.com/geekros/geekros/pkg/utils"
 	"github.com/gookit/color"
+)
+
+type (
+	sendCodeResponseMsg struct {
+		success bool
+		err     string
+	}
+	verifyCodeResponseMsg struct {
+		success bool
+		err     string
+	}
 )
 
 type LoginModel struct {
 	state      string
 	phoneInput textinput.Model
 	codeInput  textinput.Model
+	Loading    spinner.Model
 	err        string
 }
 
@@ -43,16 +58,24 @@ func InitModel() LoginModel {
 	code.CharLimit = 6
 	code.Width = 50
 
+	loading := spinner.New()
+	loading.Spinner = spinner.Dot
+	loading.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
+
 	return LoginModel{
 		state:      "phone",
 		phoneInput: phone,
 		codeInput:  code,
+		Loading:    loading,
 	}
 }
 
 func (m LoginModel) Init() tea.Cmd {
 
-	return textinput.Blink
+	return tea.Batch(
+		textinput.Blink,
+		m.Loading.Tick,
+	)
 }
 
 func (m LoginModel) Update(msg tea.Msg) (LoginModel, tea.Cmd) {
@@ -69,15 +92,17 @@ func (m LoginModel) Update(msg tea.Msg) (LoginModel, tea.Cmd) {
 					m.err = color.Yellow.Text("Invalid phone number.")
 					return m, nil
 				}
-				m.state = "code"
-				m.codeInput.Focus()
+				m.state = "sending"
+				return m, tea.Batch(
+					m.Loading.Tick,
+					sendCodeRequest(m.phoneInput.Value()),
+				)
 			case "code":
-				if m.codeInput.Value() == "123456" {
-					m.state = "success"
-					return m, tea.Quit
-				} else {
-					m.state = "failed"
-				}
+				m.state = "verifying"
+				return m, tea.Batch(
+					m.Loading.Tick,
+					verifyCodeRequest(m.phoneInput.Value(), m.codeInput.Value()),
+				)
 			case "failed":
 				m.codeInput.SetValue("")
 				m.state = "code"
@@ -85,6 +110,28 @@ func (m LoginModel) Update(msg tea.Msg) (LoginModel, tea.Cmd) {
 		case tea.KeyEsc, tea.KeyCtrlC:
 			return m, tea.Quit
 		}
+	case spinner.TickMsg:
+		if m.state == "sending" || m.state == "verifying" {
+			m.Loading, cmd = m.Loading.Update(msg)
+			return m, cmd
+		}
+	case sendCodeResponseMsg:
+		if msg.success {
+			m.state = "code"
+			m.codeInput.Focus()
+		} else {
+			m.err = msg.err
+			m.state = "phone"
+		}
+	case verifyCodeResponseMsg:
+		if msg.success {
+			m.state = "success"
+			return m, tea.Quit
+		} else {
+			m.err = msg.err
+			m.state = "failed"
+		}
+	}
 	}
 
 	switch m.state {
@@ -111,4 +158,16 @@ func (m LoginModel) View() string {
 	}
 
 	return ""
+}
+
+func sendCodeRequest(phone string) tea.Cmd {
+	return tea.Tick(time.Second*2, func(t time.Time) tea.Msg {
+		return sendCodeResponseMsg{true, ""}
+	})
+}
+
+func verifyCodeRequest(phone, code string) tea.Cmd {
+	return tea.Tick(time.Second*2, func(t time.Time) tea.Msg {
+		return verifyCodeResponseMsg{true, ""}
+	})
 }
