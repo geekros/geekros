@@ -30,6 +30,7 @@ type (
 	onItemsRequestMsg struct {
 		success bool
 		err     string
+		items   []list.Item
 	}
 )
 
@@ -116,6 +117,10 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.keyword.Focus()
 				return m, cmd
 			}
+			m.items = list.New(msg.items, list.NewDefaultDelegate(), 0, 0)
+			m.items.Title = "Search Results"
+			m.items.SetShowHelp(false)
+			m.items.SetWidth(300)
 			m.state = "items"
 		}
 	}
@@ -154,7 +159,6 @@ func (m McuCreateModel) onItemsRequest(keyword string) tea.Cmd {
 			item{title: "Bitter melon", desc: "It cools you down"},
 			item{title: "Nice socks", desc: "And by that I mean socks without holes"},
 		}
-		m.items = list.New(items, list.NewDefaultDelegate(), 0, 0)
-		return onItemsRequestMsg{true, ""}
+		return onItemsRequestMsg{true, "", items}
 	})
 }
