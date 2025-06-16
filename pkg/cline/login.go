@@ -173,7 +173,7 @@ func sendCodeRequest(phone string) tea.Cmd {
 	})
 }
 
-func verifyCodeRequest(phone, code string) tea.Cmd {
+func verifyCodeRequest(phone string, code string) tea.Cmd {
 	return tea.Tick(time.Second*2, func(t time.Time) tea.Msg {
 		return verifyCodeResponseMsg{true, ""}
 	})
