@@ -62,7 +62,6 @@ func InitMcuCreateModel() McuCreateModel {
 	items := list.New([]list.Item{}, list.NewDefaultDelegate(), 0, 0)
 	items.Title = "Search Results"
 	items.SetShowHelp(false)
-	items.SetWidth(300)
 
 	loading := spinner.New()
 	loading.Spinner = spinner.Dot
@@ -122,7 +121,7 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.keyword.Focus()
 				return m, cmd
 			}
-			m.items = list.New(msg.items, list.NewDefaultDelegate(), 0, 5)
+			m.items = list.New(msg.items, list.NewDefaultDelegate(), 0, 0)
 			m.items.Title = "Search Results"
 			m.items.SetShowHelp(false)
 			m.state = "items"
