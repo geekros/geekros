@@ -98,6 +98,10 @@ func (m LoginModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					sendCodeRequest(m.phoneInput.Value()),
 				)
 			case "code":
+				if m.codeInput.Value() != "123456" {
+					m.state = "failed"
+					return m, nil
+				}
 				m.state = "verifying"
 				return m, tea.Batch(
 					m.Loading.Tick,
