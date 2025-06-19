@@ -36,11 +36,11 @@ on_init(){
         sudo rm -rf go"${golang_version}".linux-"${architecture}".tar.gz
     fi
 
-    # if [ ! -f "/usr/local/bin/xmake" ]; then
-    #     git clone --recursive git@github.com:xmake-io/xmake.git
-    #     cd ./xmake && git checkout tags/v2.9.4 && ./configure && make && sudo make install PREFIX=/usr/local
-    #     cd ../ && sudo rm -rf xmake
-    # fi
+    if [ ! -f "/usr/local/bin/xmake" ]; then
+        git clone --recursive git@github.com:xmake-io/xmake.git
+        cd ./xmake && git checkout tags/v2.9.4 && ./configure && make && sudo make install PREFIX=/usr/local
+        cd ../ && sudo rm -rf xmake
+    fi
 
     if [ ! -f "/usr/local/bin/st-info" ]; then
         git clone git@github.com:stlink-org/stlink.git
