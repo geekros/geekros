@@ -103,7 +103,7 @@ func (m McuCreateModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					)
 				}
 			case "items":
-				i, ok := m.items.SelectedItem().(item)
+				_, ok := m.items.SelectedItem().(item)
 				if ok {
 
 				}
