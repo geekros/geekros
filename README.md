@@ -22,5 +22,5 @@ Codename:       jammy
 Quick installation and deployment in Ubuntu.
 
 ```shell
-sudo curl -s https://mirrors.geekros.com/install.sh|bash
+sudo curl -s https://install.geekros.com/geekros.sh|bash
 ```
